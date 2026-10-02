@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
 
@@ -201,6 +201,11 @@ export default function MapScreen() {
       {showDecision && (
         <FoodDecisionSheet
           onClose={() => setShowDecision(false)}
+          onApplyCategory={(newCat) => {
+            setCategory(newCat);
+            setSelectedIndex(0);
+            setShowFeed(true);
+          }}
         />
       )}
 

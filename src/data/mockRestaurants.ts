@@ -2,7 +2,9 @@
 
 export const mockRestaurants: Restaurant[] = [
   {
-    id: "restaurant-001",`r`n    source: "mock",`r`n    name: "멘야 하루",
+    id: "restaurant-001",
+    source: "mock",
+    name: "멘야 하루",
     category: "일식",
     rating: 4.8,
     reviewCount: 517,
@@ -22,9 +24,10 @@ export const mockRestaurants: Restaurant[] = [
       y: 42,
     },
   },
-
   {
-    id: "restaurant-002",`r`n    source: "mock",`r`n    name: "서울식당",
+    id: "restaurant-002",
+    source: "mock",
+    name: "서울식당",
     category: "한식",
     rating: 4.6,
     reviewCount: 328,
@@ -44,9 +47,10 @@ export const mockRestaurants: Restaurant[] = [
       y: 54,
     },
   },
-
   {
-    id: "restaurant-003",`r`n    source: "mock",`r`n    name: "치즈하우스",
+    id: "restaurant-003",
+    source: "mock",
+    name: "치즈하우스",
     category: "양식",
     rating: 4.5,
     reviewCount: 241,
@@ -66,9 +70,10 @@ export const mockRestaurants: Restaurant[] = [
       y: 32,
     },
   },
-
   {
-    id: "restaurant-004",`r`n    source: "mock",`r`n    name: "골목 짜장",
+    id: "restaurant-004",
+    source: "mock",
+    name: "골목 짜장",
     category: "중식",
     rating: 4.3,
     reviewCount: 192,
@@ -88,9 +93,10 @@ export const mockRestaurants: Restaurant[] = [
       y: 28,
     },
   },
-
   {
-    id: "restaurant-005",`r`n    source: "mock",`r`n    name: "소반집",
+    id: "restaurant-005",
+    source: "mock",
+    name: "소반집",
     category: "한식",
     rating: 4.7,
     reviewCount: 164,
@@ -112,7 +118,6 @@ export const mockRestaurants: Restaurant[] = [
   },
 ];
 
-
 export const foodCategories = [
   "전체",
   "한식",
@@ -123,4 +128,3 @@ export const foodCategories = [
   "분식",
   "카페",
 ] as const;
-

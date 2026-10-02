@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import { foodCategories } from "@/data/mockRestaurants";
 import { RestaurantCategory } from "@/types/restaurant";
+import RadiusSelector from "@/components/map/RadiusSelector";
 
 interface RestaurantFilterProps {
   category: RestaurantCategory | "전체";
@@ -81,22 +82,11 @@ export default function RestaurantFilter({
             </span>
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
-            {[1, 2, 5].map((item) => (
-              <button
-                key={item}
-                type="button"
-                onClick={() => onRadiusChange(item)}
-                className={`rounded-2xl py-3 text-sm font-bold ${
-                  radius === item
-                    ? "bg-black text-white"
-                    : "bg-gray-100 text-gray-600"
-                }`}
-              >
-                {item}km
-              </button>
-            ))}
-          </div>
+          <RadiusSelector
+            radius={radius}
+            onChange={onRadiusChange}
+            options={[1, 2, 3, 5]}
+          />
         </div>
 
         <button

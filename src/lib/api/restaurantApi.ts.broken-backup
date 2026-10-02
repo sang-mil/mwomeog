@@ -1,0 +1,106 @@
+# ===== mwomeog build fix =====
+
+$ErrorActionPreference = "Stop"
+
+Write-Host ""
+Write-Host "=== 1. searchRestaurants.ts 생성 ===" -ForegroundColor Cyan
+
+$dir = "src\lib\restaurant"
+
+if (-not (Test-Path $dir)) {
+    New-Item -ItemType Directory -Path $dir -Force | Out-Null
+}
+
+$file = Join-Path $dir "searchRestaurants.ts"
+
+$content = @'
+import {
+  Restaurant,
+  RestaurantCategory,
+} from "@/types/restaurant";
+
+import {
+  getRestaurantProvider,
+} from "./providers/registry";
+
+interface SearchRestaurantsParams {
+  latitude: number;
+  longitude: number;
+  radiusKm: number;
+  category?: RestaurantCategory | "전체";
+  keyword?: string;
+  provider?: string;
+  limit?: number;
+}
+
+export async function searchRestaurants({
+  latitude,
+  longitude,
+  radiusKm,
+  category = "전체",
+  keyword,
+  provider = "mock",
+  limit = 50,
+}: SearchRestaurantsParams): Promise<Restaurant[]> {
+  const restaurantProvider =
+    getRestaurantProvider(provider);
+
+  return restaurantProvider.searchNearby({
+    latitude,
+    longitude,
+    radiusKm,
+    category,
+    keyword,
+    limit,
+  });
+}
+'@
+
+[System.IO.File]::WriteAllText(
+    (Join-Path (Get-Location) $file),
+    $content,
+    (New-Object System.Text.UTF8Encoding($false))
+)
+
+Write-Host "Created: $file" -ForegroundColor Green
+
+
+Write-Host ""
+Write-Host "=== 2. package.json build 명령 수정 ===" -ForegroundColor Cyan
+
+$packagePath = Join-Path (Get-Location) "package.json"
+
+$package = Get-Content $packagePath -Raw
+
+$oldBuild = '"build": "next build"'
+$newBuild = '"build": "next build --webpack"'
+
+if ($package.Contains($oldBuild)) {
+    $package = $package.Replace($oldBuild, $newBuild)
+
+    [System.IO.File]::WriteAllText(
+        $packagePath,
+        $package,
+        (New-Object System.Text.UTF8Encoding($false))
+    )
+
+    Write-Host 'Changed: "build": "next build" -> "build": "next build --webpack"' -ForegroundColor Green
+}
+elseif ($package.Contains('"build": "next build --webpack"')) {
+    Write-Host "package.json already uses next build --webpack" -ForegroundColor Yellow
+}
+else {
+    Write-Host "WARNING: package.json build script was not found in expected form." -ForegroundColor Yellow
+}
+
+
+Write-Host ""
+Write-Host "=== 3. 현재 변경사항 확인 ===" -ForegroundColor Cyan
+
+git status --short
+
+
+Write-Host ""
+Write-Host "=== 4. production build 실행 ===" -ForegroundColor Cyan
+
+npm run build
