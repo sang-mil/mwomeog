@@ -1,0 +1,33 @@
+﻿const EARTH_RADIUS_KM = 6371;
+
+export function calculateDistanceKm(
+  latitude1: number,
+  longitude1: number,
+  latitude2: number,
+  longitude2: number,
+): number {
+  const toRadians = (degree: number) =>
+    (degree * Math.PI) / 180;
+
+  const lat1 = toRadians(latitude1);
+  const lat2 = toRadians(latitude2);
+
+  const deltaLat = toRadians(
+    latitude2 - latitude1,
+  );
+
+  const deltaLng = toRadians(
+    longitude2 - longitude1,
+  );
+
+  const a =
+    Math.sin(deltaLat / 2) ** 2 +
+    Math.cos(lat1) *
+      Math.cos(lat2) *
+      Math.sin(deltaLng / 2) ** 2;
+
+  const c =
+    2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return EARTH_RADIUS_KM * c;
+}
