@@ -1,6 +1,9 @@
-﻿import type { NextConfig } from "next";
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  env: {
+    KAKAO_MAP_API_KEY: process.env.KAKAO_MAP_API_KEY,
+  },
   images: {
     remotePatterns: [
       {

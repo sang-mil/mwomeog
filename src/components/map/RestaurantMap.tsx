@@ -23,7 +23,9 @@ export default function RestaurantMap({
   radiusKm = 2,
   useRealMap = true,
 }: RestaurantMapProps) {
-  const hasKakaoKey = !!process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
+  const hasKakaoKey =
+    !!process.env.KAKAO_MAP_API_KEY ||
+    !!process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
 
   if (useRealMap && hasKakaoKey) {
     return (

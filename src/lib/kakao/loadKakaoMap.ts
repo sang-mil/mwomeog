@@ -17,9 +17,11 @@ export function loadKakaoMapSDK(): Promise<void> {
     return kakaoLoadPromise;
   }
 
-  const appKey = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
+  const appKey =
+    process.env.KAKAO_MAP_API_KEY ||
+    process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
   if (!appKey) {
-    return Promise.reject(new Error("NEXT_PUBLIC_KAKAO_MAP_API_KEY is not configured"));
+    return Promise.reject(new Error("KAKAO_MAP_API_KEY is not configured"));
   }
 
   kakaoLoadPromise = new Promise<void>((resolve, reject) => {
